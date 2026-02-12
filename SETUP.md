@@ -191,7 +191,7 @@ $ cd <твоя выбранная директория>
 
 # Клонируем свой репозиторий с gitlab.manytask.org (создается автоматически при регистрации)
 # Имя репозитория доступно по ссылке "MY REPO" на app.manytask.org
-$ git clone git@gitlab.manytask.org:python-ai360/students-2025-fall/<твой репозиторий>
+$ git clone git@gitlab.manytask.org:python-ai360/students-2026-spring/<твой репозиторий>
 
 # Переходим в директорию склонированного репозитория
 $ cd <твой репозиторий>
@@ -201,7 +201,7 @@ $ git config --local user.name "<твой логин с app.manytask.org>"
 $ git config --local user.email "<твой емейл с app.manytask.org>"
 
 # Настраиваем возможность получать обновления из публичного репозитория с задачами
-$ git remote add upstream git@gitlab.manytask.org:python-ai360/public-2025-fall.git
+$ git remote add upstream git@gitlab.manytask.org:python-ai360/public-2026-spring.git
 ```
 
 ### Установка интерпретатора и пакетов <a id='install'/>

@@ -19,7 +19,7 @@ class ImportAnalyzer(ast.NodeVisitor):
             self.from_imports.add(node.module.split(".")[0])
 
     def get_imports(self) -> tuple[set[str], set[str]]:
-        print(f'{self.from_imports=}, {self.direct_imports=}')
+        print(f"{self.from_imports=}, {self.direct_imports=}")
         return self.from_imports, self.direct_imports
 
 
@@ -45,7 +45,7 @@ def get_module_imports(path: str | Path) -> set[str]:
         return get_file_imports(path)
     else:
         imports: set[str] = set()
-        for filepath in path.glob('**/*.py'):
+        for filepath in path.glob("**/*.py"):
             imports.update(get_file_imports(filepath))
         return imports
 

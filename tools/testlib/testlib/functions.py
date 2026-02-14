@@ -7,9 +7,9 @@ import copy
 
 
 def is_input_unchanged(
-        func: Callable[..., tp.Any],
-        input_args: tuple[tp.Any, ...] | None = None,
-        input_kwargs: dict[tp.Any, tp.Any] | None = None
+    func: Callable[..., tp.Any],
+    input_args: tuple[tp.Any, ...] | None = None,
+    input_kwargs: dict[tp.Any, tp.Any] | None = None,
 ) -> bool:
     input_args = input_args or ()
     input_kwargs = input_kwargs or {}
@@ -26,28 +26,24 @@ def is_regexp_used(func: Callable[..., tp.Any], substr: str) -> bool:
     return substr in inspect.getsource(func)
 
 
-def _extract_global(
-        func: Callable[..., tp.Any] | types.CodeType,
-        name: str
-) -> tp.Callable[..., tp.Any] | None:
+def _extract_global(func: Callable[..., tp.Any] | types.CodeType, name: str) -> tp.Callable[..., tp.Any] | None:
     if isinstance(func, types.CodeType):
         return None
     func = tp.cast(types.FunctionType, func)
     some_global = func.__globals__.get(name, None)
     if some_global is not None:
         # error: Subclass of "FunctionType" and "BuiltinFunctionType" cannot exist: "FunctionType" is final
-        if isinstance(some_global, types.FunctionType) \
-                and not isinstance(some_global, types.BuiltinFunctionType):  # type: ignore
+        if isinstance(some_global, types.FunctionType) and not isinstance(some_global, types.BuiltinFunctionType):  # type: ignore
             return some_global
     return None
 
 
 def _get_function_instructions(
-        func: Callable[..., tp.Any] | types.CodeType,
-        visited_names: set[str] | None = None,
-        visited_globals: set[str] | None = None,
-        base_func: Callable[..., tp.Any] | types.CodeType | None = None,
-        extra_vars: set[str] | None = None,
+    func: Callable[..., tp.Any] | types.CodeType,
+    visited_names: set[str] | None = None,
+    visited_globals: set[str] | None = None,
+    base_func: Callable[..., tp.Any] | types.CodeType | None = None,
+    extra_vars: set[str] | None = None,
 ) -> Generator[dis.Instruction, None, None]:
     # extra_vars = extra_vars or dict()
 
@@ -79,8 +75,9 @@ def _get_function_instructions(
                 visited_globals.add(name)
 
                 # error: Subclass of "FunctionType" and "BuiltinFunctionType" cannot exist: "FunctionType" is final
-                if isinstance(some_global, types.FunctionType) and \
-                        not isinstance(some_global, types.BuiltinFunctionType):  # type: ignore
+                if isinstance(some_global, types.FunctionType) and not isinstance(
+                    some_global, types.BuiltinFunctionType
+                ):  # type: ignore
                     yield from _get_function_instructions(some_global, visited_names, visited_globals, func)
                 if isinstance(some_global, type):
                     # TODO: class methods
@@ -88,12 +85,13 @@ def _get_function_instructions(
                     # (otherwise it is 'wrapper_descriptor' or 'builtin_function_or_method')
                     if isinstance(some_global.__init__, types.FunctionType):  # type: ignore
                         yield from _get_function_instructions(
-                            some_global.__init__, visited_names, visited_globals, func  # type: ignore
+                            some_global.__init__,
+                            visited_names,
+                            visited_globals,
+                            func,  # type: ignore
                         )
                     if isinstance(some_global.__new__, types.FunctionType):
-                        yield from _get_function_instructions(
-                            some_global.__new__, visited_names, visited_globals, func
-                        )
+                        yield from _get_function_instructions(some_global.__new__, visited_names, visited_globals, func)
         func_code = func.__code__
     else:
         func_code = func
@@ -104,21 +102,17 @@ def _get_function_instructions(
 
 
 def is_bytecode_op_used(func: Callable[..., tp.Any], value: str) -> bool:
-    return any(
-        getattr(instr, 'opname') == value for instr in _get_function_instructions(func)
-    )
+    return any(getattr(instr, "opname") == value for instr in _get_function_instructions(func))
 
 
 def is_global_used(func: Callable[..., tp.Any], value: str) -> bool:
     return any(
-        getattr(instr, 'opname') == 'LOAD_GLOBAL' and getattr(instr, 'argval') == value
+        getattr(instr, "opname") == "LOAD_GLOBAL" and getattr(instr, "argval") == value
         for instr in _get_function_instructions(func)
     )
 
 
 def is_instruction_used(func: Callable[..., tp.Any], param: str, value: str | None = None) -> bool:
     # if value is not None:
-    return any(
-        getattr(instr, param) == value for instr in _get_function_instructions(func)
-    )
+    return any(getattr(instr, param) == value for instr in _get_function_instructions(func))
     # else:

@@ -12,9 +12,9 @@ class FPLiteral:
 
 RE_FP_LITERAL = (
     r'\s*(?:'
-    r'(?P<case1>(?P<int1>\d+)\.(?P<frac1>\d*))|'
-    r'(?P<case2>\.(?P<frac2>\d+))|'
-    r'(?P<case3>(?P<int3>\d+)(?=[eE]))'
+    r'((?P<int1>\d+)\.(?P<frac1>\d*))|'
+    r'(\.(?P<frac2>\d+))|'
+    r'((?P<int3>\d+)(?=[eE]))'
     r')(?:[eE](?P<exp>[+-]?\d+))?'
     r'(?=\s|$|[*/+-])'
 )

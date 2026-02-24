@@ -1,16 +1,35 @@
 import re
+from dataclasses import dataclass
+from typing import Optional
 
 
 @dataclass
-class FPLiteral():
+class FPLiteral:
     integral: str
     fractional: str
-    exp: str
+    exp: Optional[str] = None
 
 
-RE_FP_LITERAL = ...
+RE_FP_LITERAL = (
+    r'\s*(?:'
+    r'(?P<case1>(?P<int1>\d+)\.(?P<frac1>\d*))|'
+    r'(?P<case2>\.(?P<frac2>\d+))|'
+    r'(?P<case3>(?P<int3>\d+)(?=[eE]))'
+    r')(?:[eE](?P<exp>[+-]?\d+))?'
+    r'(?=\s|$|[*/+-])'
+)
 
 
 def f_repr_fp_literal(m: re.Match[str]) -> FPLiteral:
-    ...
+    if m.group('int1') is not None:
+        integral = m.group('int1')
+        fractional = m.group('frac1')
+    elif m.group('int3') is not None:
+        integral = m.group('int3')
+        fractional = ''
+    else:
+        integral = ''
+        fractional = m.group('frac2')
 
+    exp = m.group('exp')
+    return FPLiteral(integral=integral, fractional=fractional, exp=exp)

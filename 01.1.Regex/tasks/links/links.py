@@ -1,9 +1,10 @@
 import re
 
 
-RE_A_HREF = ...
-
+RE_A_HREF = (r'<[aA](?:\s+[^\s=>]+(?:=(?:"[^"]*"|'
+             r'(?:/(?!>)|[^/">\s])+))?)*\s+[hH][rR][eE][fF]=(?:"([^"]+)"|'
+             r'((?:/(?!>)|[^/">\s])+))(?:\s+[^\s=>]+(?:=(?:"[^"]*"|(?:/(?!>)|[^/">\s])+))?)*\s*/?>')
 
 def f_link(m: re.Match[str]) -> str:
-    return ""
 
+    return m.group(1) or m.group(2)

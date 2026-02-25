@@ -12,9 +12,10 @@ def test_empty():
     assert found == []
 
 
+
 def test_blank():
     for i in range(1, 20):
-        s = i * " "
+        s = i * ' '
         found = find_all(s, RE_PALINDROME_NUM)
         assert found == []
 
@@ -30,7 +31,7 @@ def test_spaces_single_digit():
     for i in range(0, 10):
         for j in range(1, 20):
             for k in range(1, 20):
-                s = (j * " ") + str(i) + (k * " ")
+                s = (j * ' ') + str(i) + (k * ' ')
                 found = find_all(s, RE_PALINDROME_NUM)
                 assert found == [str(i)]
 
@@ -39,7 +40,7 @@ def test_digit_letter():
     for i in range(0, 10):
         for j in range(1, 20):
             for k in range(1, 20):
-                s = (j * " ") + str(i) + "a" + (k * " ")
+                s = (j * ' ') + str(i) + 'a'  + (k * ' ')
                 found = find_all(s, RE_PALINDROME_NUM)
                 assert found == []
 
@@ -48,8 +49,8 @@ def test_sign_digit():
     for i in range(0, 10):
         for j in range(1, 20):
             for k in range(1, 20):
-                for sgn in "-+":
-                    s = (j * " ") + sgn + str(i) + (k * " ")
+                for sgn in '-+':
+                    s = (j * ' ') +  sgn + str(i)  + (k * ' ')
                     print(s)
                     found = find_all(s, RE_PALINDROME_NUM)
                     assert found == []
@@ -57,7 +58,7 @@ def test_sign_digit():
 
 def test_just_two_digits_palindrome():
     for i in range(0, 10):
-        s = f"{i}{i}"
+        s = f'{i}{i}'
         found = find_all(s, RE_PALINDROME_NUM)
         assert found == [s]
 
@@ -67,7 +68,7 @@ def test_just_two_digits_non_palindrome():
         for j in range(0, 10):
             if i == j:
                 continue
-            s = f"{i}{j}"
+            s = f'{i}{j}'
             found = find_all(s, RE_PALINDROME_NUM)
             assert found == []
 
@@ -76,15 +77,15 @@ def test_two_digits_palindrome_with_spaces():
     for i in range(0, 10):
         for j in range(1, 20):
             for k in range(1, 20):
-                s = (i * " ") + f"{i}{i}" + (j * " ")
+                s = (i * ' ') + f'{i}{i}' + (j * ' ')
                 found = find_all(s, RE_PALINDROME_NUM)
-                assert found == [f"{i}{i}"]
+                assert found == [f'{i}{i}']
 
 
 def test_digit_double_space_digit():
     for i in range(0, 10):
         for j in range(0, 10):
-            s = f"{i}  {j}"
+            s = f'{i}  {j}'
             found = find_all(s, RE_PALINDROME_NUM)
             assert found == [str(i), str(j)]
 
@@ -92,7 +93,7 @@ def test_digit_double_space_digit():
 def test_digit_single_space_digit():
     for i in range(0, 10):
         for j in range(0, 10):
-            s = f"{i} {j}"
+            s = f'{i} {j}'
             found = find_all(s, RE_PALINDROME_NUM)
             assert found == [str(i), str(j)]
 
@@ -100,14 +101,14 @@ def test_digit_single_space_digit():
 def test_digit_single_plus_digit():
     for i in range(0, 10):
         for j in range(0, 10):
-            s = f"{i}+{j}"
+            s = f'{i}+{j}'
             found = find_all(s, RE_PALINDROME_NUM)
             assert found == []
 
 
 def test_3_digits():
     for i in range(0, 1000):
-        s = f"{i:03d}"
+        s = f'{i:03d}'
         found = find_all(s, RE_PALINDROME_NUM)
         if s == s[::-1]:
             assert found == [s]
@@ -118,13 +119,13 @@ def test_3_digits():
 def test_3_digits_all():
     nums = [str(i) for i in range(0, 1000)]
     expected = [s for s in nums if s == s[::-1]]
-    found = find_all(" ".join(nums), RE_PALINDROME_NUM)
+    found = find_all(' '.join(nums), RE_PALINDROME_NUM)
     assert expected == found
 
 
 def test_4_digits():
     for i in range(0, 10000):
-        s = f"{i:04d}"
+        s = f'{i:04d}'
         found = find_all(s, RE_PALINDROME_NUM)
         if s == s[::-1]:
             assert found == [s]
@@ -135,13 +136,13 @@ def test_4_digits():
 def test_4_digits_all():
     nums = [str(i) for i in range(0, 10000)]
     expected = [s for s in nums if s == s[::-1]]
-    found = find_all(" ".join(nums), RE_PALINDROME_NUM)
+    found = find_all(' '.join(nums), RE_PALINDROME_NUM)
     assert expected == found
 
 
 def test_5_digits():
     for i in range(0, 100000):
-        s = f"{i:05d}"
+        s = f'{i:05d}'
         found = find_all(s, RE_PALINDROME_NUM)
         if s == s[::-1]:
             assert found == [s]
@@ -152,5 +153,6 @@ def test_5_digits():
 def test_5_digits_all():
     nums = [str(i) for i in range(0, 100000)]
     expected = [s for s in nums if s == s[::-1]]
-    found = find_all(" ".join(nums), RE_PALINDROME_NUM)
+    found = find_all(' '.join(nums), RE_PALINDROME_NUM)
     assert expected == found
+

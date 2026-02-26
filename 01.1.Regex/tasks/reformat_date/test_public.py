@@ -14,7 +14,7 @@ def test_empty():
 
 def test_blank():
     for i in range(1, 20):
-        s = i * " "
+        s = i * ' '
         result = sub_all(s)
         assert result == s
 
@@ -55,7 +55,6 @@ def test_two_digits_dot_two_digits():
             result = sub_all(s)
             assert result == s
 
-
 def test_two_digits_dot_two_digits_dot():
     for i in range(1, 32):
         for j in range(1, 13):
@@ -77,11 +76,11 @@ def test_two_digits_dot_two_digits_dot_two_digits():
     for i in range(1, 32):
         for j in range(1, 13):
             for k in range(0, 100):
-                s = f"{i}.{j}.{k:02d}"
+                s = f'{i}.{j}.{k:02d}'
                 print("s", s)
                 result = sub_all(s)
                 print("result", result)
-                assert result == f"{j}/{i}/{k:02d}"
+                assert result == f'{j}/{i}/{k:02d}'
 
 
 def test_two_digits_dot_two_digits_dot_3_digits():
@@ -90,7 +89,7 @@ def test_two_digits_dot_two_digits_dot_3_digits():
         for k in range(0, 1000):
             j %= 12
             j += 1
-            s = f"{i}.{j}.{k:03d}"
+            s = f'{i}.{j}.{k:03d}'
             result = sub_all(s)
             assert result == s
 
@@ -101,11 +100,11 @@ def test_two_digits_dot_two_digits_dot_4_digits():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f"{i}.{j}.{k:04d}"
+            s = f'{i}.{j}.{k:04d}'
             print("s", s)
             result = sub_all(s)
             print("result", result)
-            assert result == f"{j}/{i}/{k:04d}"
+            assert result == f'{j}/{i}/{k:04d}'
 
 
 def test_two_digits_dot_two_digits_dot_5_digits():
@@ -114,7 +113,7 @@ def test_two_digits_dot_two_digits_dot_5_digits():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f"{i}.{j}.{k:05d}"
+            s = f'{i}.{j}.{k:05d}'
             print("s", s)
             result = sub_all(s)
             print("result", result)
@@ -127,11 +126,12 @@ def test_two_digits_dot_two_digits_dot_5_digits_2():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f"{i}.{j}.{k:04d}0"
+            s = f'{i}.{j}.{k:04d}0'
             print("s", s)
             result = sub_all(s)
             print("result", result)
             assert result == s
+
 
 
 def test_two_digits_dot_two_digits_dot_4_digits_not_dots():
@@ -140,7 +140,7 @@ def test_two_digits_dot_two_digits_dot_4_digits_not_dots():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f"{i}/{j}/{k:04d}"
+            s = f'{i}/{j}/{k:04d}'
             print("s", s)
             result = sub_all(s)
             print("result", result)
@@ -153,11 +153,11 @@ def test_two_digits_dot_two_digits_dot_4_digits_space_after():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f"{i}.{j}.{k:04d} "
+            s = f'{i}.{j}.{k:04d} '
             print("s", s)
             result = sub_all(s)
             print("result", result)
-            assert result == f"{j}/{i}/{k:04d} "
+            assert result == f'{j}/{i}/{k:04d} '
 
 
 def test_two_digits_dot_two_digits_dot_4_digits_space_before():
@@ -166,11 +166,11 @@ def test_two_digits_dot_two_digits_dot_4_digits_space_before():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f" {i}.{j}.{k:04d}"
+            s = f' {i}.{j}.{k:04d}'
             print("s", s)
             result = sub_all(s)
             print("result", result)
-            assert result == f" {j}/{i}/{k:04d}"
+            assert result == f' {j}/{i}/{k:04d}'
 
 
 def test_two_digits_dot_two_digits_dot_4_digits_comma_before_space_after():
@@ -179,11 +179,11 @@ def test_two_digits_dot_two_digits_dot_4_digits_comma_before_space_after():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f",{i}.{j}.{k:04d} "
+            s = f',{i}.{j}.{k:04d} '
             print("s", s)
             result = sub_all(s)
             print("result", result)
-            assert result == f",{j}/{i}/{k:04d} "
+            assert result == f',{j}/{i}/{k:04d} '
 
 
 def test_two_digits_dot_two_digits_dot_4_digits_comma_before_semicolon_after():
@@ -192,11 +192,11 @@ def test_two_digits_dot_two_digits_dot_4_digits_comma_before_semicolon_after():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f",{i}.{j}.{k:04d};"
+            s = f',{i}.{j}.{k:04d};'
             print("s", s)
             result = sub_all(s)
             print("result", result)
-            assert result == f",{j}/{i}/{k:04d};"
+            assert result == f',{j}/{i}/{k:04d};'
 
 
 def test_two_digits_dot_two_digits_dot_4_digits_in_parens():
@@ -205,11 +205,11 @@ def test_two_digits_dot_two_digits_dot_4_digits_in_parens():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f"({i}.{j}.{k:04d})"
+            s = f'({i}.{j}.{k:04d})'
             print("s", s)
             result = sub_all(s)
             print("result", result)
-            assert result == f"({j}/{i}/{k:04d})"
+            assert result == f'({j}/{i}/{k:04d})'
 
 
 def test_two_digits_dot_two_digits_dot_4_digits_in_parens_same_direction():
@@ -218,7 +218,7 @@ def test_two_digits_dot_two_digits_dot_4_digits_in_parens_same_direction():
         for k in range(1000, 3000):
             j %= 12
             j += 1
-            s = f"({i}.{j}.{k:04d}("
+            s = f'({i}.{j}.{k:04d}('
             print("s", s)
             result = sub_all(s)
             print("result", result)
@@ -226,24 +226,25 @@ def test_two_digits_dot_two_digits_dot_4_digits_in_parens_same_direction():
 
 
 def test_two_dates_with_space():
-    s = "30.11.2012 1.9.1998"
+    s = '30.11.2012 1.9.1998'
     result = sub_all(s)
-    assert result == "11/30/2012 9/1/1998"
+    assert result == '11/30/2012 9/1/1998'
 
 
 def test_two_dates_with_double_space():
-    s = "30.11.2012  1.9.1998"
+    s = '30.11.2012  1.9.1998'
     result = sub_all(s)
-    assert result == "11/30/2012  9/1/1998"
+    assert result == '11/30/2012  9/1/1998'
 
 
 def test_two_dates_with_no_space():
-    s = "30.11.20121.9.1998"
+    s = '30.11.20121.9.1998'
     result = sub_all(s)
     assert result == s
 
 
 def test_many_dates_with_single_comma():
-    s = 100 * ["30.11.2012"]
-    result = sub_all(",".join(s))
-    assert result == ",".join(100 * ["11/30/2012"])
+    s = 100 * ['30.11.2012']
+    result = sub_all(','.join(s))
+    assert result == ','.join(100 * ['11/30/2012'])
+

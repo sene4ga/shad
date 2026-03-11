@@ -1,5 +1,6 @@
 # flake8: noqa
 from typing import Any
+import dis
 
 
 def f0() -> Any:
@@ -7,44 +8,69 @@ def f0() -> Any:
 
 
 def f1() -> Any:
-    pass
+    a = 0
+    return a
 
 
 def f2() -> Any:
-    pass
+    a = 0
+    print(a)
 
 
 def f3() -> Any:
-    pass
+    a = 0
+    a += 1
+    print(a)
 
 
 def f4() -> Any:
-    pass
+    return range(10)
 
 
 def f5() -> Any:
-    pass
+    for i in range(10):
+        print(i)
+
 
 
 def f6() -> Any:
-    pass
+    a = 0
+    for i in range(10):
+        a += 1
+    print(a)
 
 
 def f8() -> Any:
-    pass
+    x, y = 1, 2
 
 
 def f9() -> Any:
-    pass
+    return 1 if 1 == 1 else 2
+
 
 
 def f10() -> Any:
-    pass
+    for i in range(10):
+        if i == 3:
+            return
+    return
 
 
 def f11() -> Any:
-    pass
+    list_ = [1, 2, 3]
+    dict_ = {'a': 1, 'b': 2}
+    return (list_, dict_)
 
 
 def f12() -> Any:
-    pass
+    a = 1
+    b = 2
+    c = 3
+    d = 4
+    e = 5
+    return a + b * c / d ** e
+
+def get_code(f):
+    print(dis.dis(f))
+
+get_code(f12)

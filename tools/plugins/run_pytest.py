@@ -26,7 +26,7 @@ class RunPytestPlugin(RunScriptPlugin):
 
     def _run(self, args: Args, *, verbose: bool = False) -> PluginOutput:
         tests_cmd = ["python", "-m", "pytest"]
-        is_vm_task = args.target == "04.3.HW1/tasks/vm"
+        is_vm_task = args.target == "02.2.HW1/tasks/vm"
 
         if not verbose:
             tests_cmd += ["--no-header"]

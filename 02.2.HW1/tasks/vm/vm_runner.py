@@ -1,3 +1,4 @@
+import dis
 import io
 import sys
 import traceback
@@ -14,10 +15,10 @@ def compile_code(text_code: types.CodeType | str) -> types.CodeType:
     :return: compiled code
     """
     if isinstance(text_code, str):
-        # print("Text code:\n{}\n".format(text_code))
-        # print("Disassembled code:\n")
-        # dis.dis(text_code)
-        # print("\n")
+        print("Text code:\n{}\n".format(text_code))
+        print("Disassembled code:\n")
+        dis.dis(text_code)
+        print("\n")
         code = compile(text_code, "<stdin>", "exec")
     else:
         code = text_code

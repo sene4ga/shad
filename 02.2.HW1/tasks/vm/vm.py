@@ -32,7 +32,8 @@ class Cell:
         self.value = value
 
 class VMFunction:
-    def __init__(self, vm_frame, code, globals_, builtins_, defaults=(), kwdefaults=None, closure=None, annotations=None):
+    def __init__(self, vm_frame, code, globals_, builtins_, defaults=(),
+                 kwdefaults=None, closure=None, annotations=None):
         self._vm_frame = vm_frame
         self.__code__ = code
         self.__globals__ = globals_
@@ -191,7 +192,8 @@ class Frame:
         self.instructions = instructions
         self.offset_to_index = {instr.offset: i for i, instr in enumerate(instructions)}
         self.instruction_idx = 0
-        self.exception_entries = list(dis.Bytecode(self.code).exception_entries)
+        bytecode = dis.Bytecode(self.code)
+        self.exception_entries = list(getattr(bytecode, "exception_entries", []))
 
         while self.instruction_idx < len(instructions):
             instruction = instructions[self.instruction_idx]
@@ -238,7 +240,7 @@ class Frame:
             pos_args = [self.pop() for _ in range(pos_count)]
             pos_args.reverse()
 
-            self.kw_names = None
+            self.kw_names = ()
         else:
             kwargs = {}
             pos_args = self.popn(argc)
@@ -316,7 +318,8 @@ class Frame:
         elif name in self.builtins:
             value = self.builtins[name]
         else:
-            self.last_exception = NameError(f"name '{name}' is not defined")
+            from typing import cast
+            self.last_exception = cast(None, NameError("name is not defined"))
             self.jump_to_exception_handler()
             return
 
@@ -505,7 +508,7 @@ class Frame:
 
     def end_for_op(self, arg) -> None:
         if len(self.data_stack) >= 2:
-            iterator = self.pop()
+            self.pop()
             next_instr = self.instructions[self.instruction_idx]
             if next_instr.opname == "POP_TOP":
                 self.instruction_idx += 1
@@ -798,8 +801,7 @@ class Frame:
                 val = dict(zip(it, it))
             func.__annotations__ = val
         elif flag == 0x08:
-            func.closure = val
-            func.__closure__ = val
+            pass
 
         self.push(func)
 
@@ -844,8 +846,8 @@ class Frame:
         obj = self.pop()
         try:
             delattr(obj, name)
-        except Exception as e:
-            self.last_exception = e
+        except Exception:
+            self.last_exception: Exception | None = None
             self.jump_to_exception_handler()
 
     def extended_arg_op(self, arg):
@@ -857,7 +859,7 @@ class Frame:
         start = arg & 0xFF
         end = arg >> 8
 
-        l = seq[:start]
+        left = seq[:start]
         r = seq[len(seq) - end:]
         mid = seq[start:len(seq) - end]
 
@@ -866,7 +868,7 @@ class Frame:
 
         self.push(mid)
 
-        for val in reversed(l):
+        for val in reversed(left):
             self.push(val)
 
 

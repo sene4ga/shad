@@ -69,6 +69,9 @@ class BannerStorage:
         return len(self._banner_dict) == 0
 
     def add_click(self, banner_id: str) -> None:
+        if banner_id not in self._banner_dict:
+            raise NoBannerError("Unknown banner {}!".format(banner_id))
+
         self._banner_dict[banner_id].stat.add_click()
 
     def add_show(self, banner_id: str) -> None:

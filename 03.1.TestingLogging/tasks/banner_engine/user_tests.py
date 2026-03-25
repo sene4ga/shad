@@ -2,7 +2,7 @@ import typing
 
 import pytest
 
-from .banner_engine import (
+from banner_engine import (
     BannerStat, Banner, BannerStorage, EpsilonGreedyBannerEngine, EmptyBannerStorageError
 )
 

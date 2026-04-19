@@ -1,22 +1,43 @@
-import typing as tp
-
-from .animals import Cat, Cow, Dog
-
-class Animal:
-    pass
+from animals import Cat, Cow, Dog
+from abc import ABC, abstractmethod
 
 
-class CatAdapter:
-    pass
+class Animal(ABC):
+    @abstractmethod
+    def say(self) -> str:
+        pass
 
 
-class DogAdapter:
-    pass
+class CatAdapter(Animal):
+    def __init__(self, cat: Cat):
+        self._cat = cat
+
+    def say(self) -> str:
+        return self._cat.say()
 
 
-class CowAdapter:
-    pass
+class DogAdapter(Animal):
+    def __init__(self, dog: Dog):
+        self._dog = dog
+
+    def say(self) -> str:
+        return self._dog.say("woof")
 
 
-def animals_factory(animal: tp.Any) -> Animal:
-    pass
+class CowAdapter(Animal):
+    def __init__(self, cow: Cow):
+        self._cow = cow
+
+    def say(self) -> str:
+        return self._cow.talk()
+
+
+def animals_factory(animal) -> Animal:
+    if isinstance(animal, Cat):
+        return CatAdapter(animal)
+    if isinstance(animal, Dog):
+        return DogAdapter(animal)
+    if isinstance(animal, Cow):
+        return CowAdapter(animal)
+
+    raise TypeError("Unsupported animal type")
